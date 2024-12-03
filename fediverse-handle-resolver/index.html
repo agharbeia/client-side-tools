@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<title>Fediverse Handle Resolver</title>
 		<style>
@@ -31,11 +32,9 @@
 			}
 		</style>
 		<script>
-			var url;
 			function updateField() {
-				const handle = document.getElementById("handle").value;
+				const url = handle2URL(document.getElementById("handle").value);
 				const anchor = document.getElementById("URL");
-				url = handle2URL(handle);
 				anchor.innerHTML = url;
 				anchor.href = url;
 			}
@@ -69,18 +68,19 @@
 		</script>
 	</head>
 	<body>
+		<h1>The Fediverse handle resolver</h1>
 		<p>Enter a Fediverse handle below to get the equivalent URL for that account on its home instance.</p>
 		<p>Alternatively, passing a URL parameter names "handle" which value is the Fediverse handle, causes the page to automatically redirect to the account's URL on its home instances.</p>
-		<form onsubmit="if (url) window.location.href = url; return false;">
+		<form method="get" action=".">
 			<fieldset>
 				<label for="handle">Fediverse handle:</label>
 				<br>
-				<input type="text" id="handle" onkeyup="updateField()" default="@username@apex.tld" />
+				<input type="text" id="handle" name="handle" pattern="^(@\w+)@((?:\w+\.)+(?:\w+){2,})$" onkeyup="updateField()" required placeholder="@username@apex.tld" />
 				<br />
-				<label for="URL">URL:</label>
-				<a href="" id="URL" /></a>
+				URL: <a href="" id="URL"></a>
 			</fieldset>
 			<button type="submit" id="go">Go</button>
 		</form>
+		<p><a href="https://github.com/agharbeia/client-side-tools/blob/main/fediverse-handle-resolver.html">Sourcecode on Github</a>
 	</body>
-<html>
+</html>
