@@ -30,6 +30,25 @@
 			a {
 				margin-top: 2em;
 			}
+			@keyframes spectrum {
+				0% { color: red; }
+				16.666% { color: orange; }
+				33.333% { color: yellow; }
+				50% { color: green; }
+				66.666% { color: blue; }
+				83.333% { color: indigo; }
+				100% { color: violet; }
+			}
+ 
+			.spectral {
+				animation: spectrum 6s infinite;
+			}
+			#asterism {
+				position: absolute;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 500%;
+			}
 		</style>
 		<script>
 			function updateField() {
@@ -81,6 +100,7 @@
 			</fieldset>
 			<button type="submit" id="go">Go</button>
 		</form>
-		<p><a href="https://github.com/agharbeia/client-side-tools/blob/main/fediverse-handle-resolver.html">Sourcecode on Github</a>
+		<div id="asterism" class="spectral">‌⁂</div>
+		<p><a href="https://github.com/agharbeia/client-side-tools/tree/main/fediverse-handle-resolver">Sourcecode on Github</a>
 	</body>
 </html>
