@@ -1,0 +1,85 @@
+<html>
+	<head>
+		<title>Fediverse Handle Resolver</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 2em;
+				padding-top: 3em;
+			}
+			form {
+				width: 70%
+			}
+			input[type=text] {
+				padding: 10px;
+				border: 1px solid #ccc;
+				width: 300px;
+				font-size: 16px; 
+				margin-right: 10px;
+			}
+			button {
+				margin: 2em;
+				padding: 10px 20px;
+				background-color: #3498db; 
+				color: white;
+				border: none;
+				font-size: 16px; 
+				cursor: pointer; 
+			}
+			a {
+				margin-top: 2em;
+			}
+		</style>
+		<script>
+			var url;
+			function updateField() {
+				const handle = document.getElementById("handle").value;
+				const anchor = document.getElementById("URL");
+				url = handle2URL(handle);
+				anchor.innerHTML = url;
+				anchor.href = url;
+			}
+			function parseHandle(handle) {
+				const matches = handle.match(/^(@\w+)@((?:\w+\.)+(?:\w+){2,})$/u);
+				if (matches)
+					return [matches[1], matches[2]];
+				else
+					return null;
+			}
+			function handle2URL(handle) {
+				const components = parseHandle(handle);
+				if (components)
+					return `https://${components[1]}/${components[0]}`;
+				else
+					return null;
+			}
+			
+			window.onload = () => {
+				const urlParams = new URLSearchParams(window.location.search);
+				const handle = urlParams.get('handle');
+				if (handle) {
+					console.log(`Found handle: ${handle}`);
+					const url = handle2URL(handle);
+					if (url) {
+						console.log(`Redirecting to: ${url}`);
+						window.location.href = url;
+					}
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<p>Enter a Fediverse handle below to get the equivalent URL for that account on its home instance.</p>
+		<form onsubmit="if (url) window.location.href = url; return false;">
+			<fieldset>
+				<label for="handle">Fediverse handle:</label>
+				<br>
+				<input type="text" id="handle" onkeyup="updateField()" default="@username@apex.tld" />
+				<br />
+				<label for="URL">URL:</label>
+				<a href="" id="URL" /></a>
+			</fieldset>
+			<button type="submit" id="go">Go</button>
+		</form>
+	</body>
+<html>
